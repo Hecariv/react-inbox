@@ -72,3 +72,7 @@ footer.spacer {
 .fa-close {
   cursor: pointer;
 }
+
+.col-xs-11 {
+  text-align: left;
+}

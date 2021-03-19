@@ -7,6 +7,10 @@ class Compose extends Component {
         this.state = {show: false}
     }
 
+    showComppose = () => {
+        this.setState({show: !this.state.show})
+    }
+
 
     render() {
         return (

@@ -34,16 +34,9 @@ class Toolbar extends Component {
 
     render() {
         const isDisabled = this.props.messages.find(msg => msg.isSelected) ? false : true
-        const msgs = () => {
-            const selectedMsgs = this.props.messages.filter(msg => msg.isSelected);
-            if (selectedMsgs.length === this.props.messages.length) {
-                return "fa fa-check-square-o";
-            } else if (selectedMsgs.length === 0) {
-                return "";
-            } else {
-                return "fa fa-minus-square-o"
-            }
-        }
+        const selectedMsgs = this.props.messages.filter(msg => msg.isSelected);
+        const msgs = selectedMsgs&&(selectedMsgs.length === this.props.messages.length) ?
+            "fa fa-check-square-o" : (selectedMsgs.length === 0) ? "fa fa-square-o" :  "fa fa-minus-square-o"
 
         return (
             <div className="row toolbar">
@@ -52,11 +45,8 @@ class Toolbar extends Component {
                         <span className="badge badge">{this.props.messages.filter(msg => !msg.isRead).length}</span>
                         unread messages
                     </p>
-                    <a onClick={this.showCompose} className="btn btn-danger">
-                        <i className="fa fa-plus"></i>
-                    </a>
                     <button onClick={this.changeMsgsStatus} className="btn btn-default">
-                        <i className={String(msgs)}></i>
+                        <i className={msgs}></i>
                     </button>
 
                     <button disabled={isDisabled} onClick={this.markAsRead} className="btn btn-default">
