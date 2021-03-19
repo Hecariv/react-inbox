@@ -1,21 +1,13 @@
 import React, { Component } from "react"
+import Compose from "./Compose"
 
 class Toolbar extends Component {
     constructor(props) {
         super(props)
         this.state = {}
-        
+
     }
 
-    unreadMgs = () => {
-        const counter = 0;
-        const unreadMessages = this.props.messages.map(msg => {
-            if (!msg.isRead) {
-                counter++
-            }
-            unreadMessages = counter;
-        })
-    }
 
     markAsRead = () => {
         this.props.markAsRead(this.props.messages)
@@ -29,11 +21,30 @@ class Toolbar extends Component {
         this.props.deleteMessages(this.props.messages)
     }
 
+    addLabel = (e) => {
+        this.props.addLabel(e.target.value)
+    }
+    removeLabel = (e) => {
+        this.props.removeLabel(e.target.value)
+    }
 
-
+    changeMsgsStatus = () => {
+        this.props.changeMsgsStatus(this.props.messages)
+    }
 
     render() {
         const isDisabled = this.props.messages.find(msg => msg.isSelected) ? false : true
+        const msgs = () => {
+            const selectedMsgs = this.props.messages.filter(msg => msg.isSelected);
+            if (selectedMsgs.length === this.props.messages.length) {
+                return "fa fa-check-square-o";
+            } else if (selectedMsgs.length === 0) {
+                return "";
+            } else {
+                return "fa fa-minus-square-o"
+            }
+        }
+
         return (
             <div className="row toolbar">
                 <div className="col-md-12">
@@ -41,9 +52,11 @@ class Toolbar extends Component {
                         <span className="badge badge">{this.props.messages.filter(msg => !msg.isRead).length}</span>
                         unread messages
                     </p>
-
-                    <button className="btn btn-default">
-                        <i className="fa fa-square-o"></i>
+                    <a onClick={this.showCompose} className="btn btn-danger">
+                        <i className="fa fa-plus"></i>
+                    </a>
+                    <button onClick={this.changeMsgsStatus} className="btn btn-default">
+                        <i className={String(msgs)}></i>
                     </button>
 
                     <button disabled={isDisabled} onClick={this.markAsRead} className="btn btn-default">
@@ -54,14 +67,14 @@ class Toolbar extends Component {
                         Mark As Unread
                     </button>
 
-                    <select disabled={isDisabled} className="form-control label-select">
+                    <select onChange={this.addLabel} disabled={isDisabled} className="form-control label-select">
                         <option>Apply label</option>
                         <option value="dev">dev</option>
                         <option value="personal">personal</option>
                         <option value="gschool">gschool</option>
                     </select>
 
-                    <select disabled={isDisabled} className="form-control label-select">
+                    <select onChange={this.removeLabel} disabled={isDisabled} className="form-control label-select">
                         <option>Remove label</option>
                         <option value="dev">dev</option>
                         <option value="personal">personal</option>
@@ -72,6 +85,7 @@ class Toolbar extends Component {
                         <i className="fa fa-trash-o"></i>
                     </button>
                 </div>
+                <Compose />
             </div>
 
         )
