@@ -44,10 +44,10 @@ class Toolbar extends Component {
 
     }
 
-    postMessage(e) {
-        e.preventDefault()
+    postMessage() {
         const item = { subject: this.state.subject, body: this.state.body }
         this.props.postMessage(item)
+        this.setState({show : false})
     }
 
     onChange = (e) => {
