@@ -9,22 +9,27 @@ class Toolbar extends Component {
     }
 
 
-    markAsRead = () => {
+    markAsRead = (e) => {
+        e.preventDefault()
         this.props.markAsRead(this.props.messages)
     }
 
-    markAsUnread = () => {
+    markAsUnread = (e) => {
+        e.preventDefault()
         this.props.markAsUnread(this.props.messages)
     }
 
-    deleteMessages = () => {
+    deleteMessages = (e) => {
+        e.preventDefault()
         this.props.deleteMessages(this.props.messages)
     }
 
     addLabel = (e) => {
+        e.preventDefault()
         this.props.addLabel(e.target.value)
     }
     removeLabel = (e) => {
+        e.preventDefault()
         this.props.removeLabel(e.target.value)
     }
 
@@ -32,18 +37,21 @@ class Toolbar extends Component {
         this.props.changeMsgsStatus(this.props.messages)
     }
 
-    showCompose = () => {
+    showCompose = (e) => {
+        e.preventDefault()
         console.log(this.state);
         this.setState({ show: !this.state.show })
 
     }
 
-    postMessage() {
+    postMessage(e) {
+        e.preventDefault()
         const item = { subject: this.state.subject, body: this.state.body }
         this.props.postMessage(item)
     }
 
     onChange = (e) => {
+        e.preventDefault()
         this.setState(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
         console.log(this.state);
     }

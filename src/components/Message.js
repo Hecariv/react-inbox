@@ -59,7 +59,7 @@ class Message extends Component {
     async patchStarredMessages(ids) {
         const response = await fetch(`http://localhost:8082/api/messages`, {
             method:"PATCH",
-            body: JSON.stringify({messageIds: ids, "command": "star", "starred": true}),
+            body: JSON.stringify({messageIds: ids, command: "star", star: true}),
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
